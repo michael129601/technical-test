@@ -4,7 +4,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <div id="app">
-    <form onsubmit="RegistrarCliente">
+    <form  v-on:submit.prevent="RegistrarCliente">
         <div class="card">
           <div class="card-header">
             <label>REGISTRO DE CLIENTES</label>
@@ -32,7 +32,7 @@
                   >Edad<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.edad"/>
+                  <input v-model="formData.edad" maxlength="3" type="number"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -40,7 +40,7 @@
                   >Identificacion<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.identificacion" />
+                  <input v-model="formData.identificacion" maxlength="10" />
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -48,7 +48,7 @@
                   >Direccion<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input />
+                  <input v-model="formData.direccion" maxlength="100" />
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -56,7 +56,7 @@
                   >Telefono<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.telefono"/>
+                  <input v-model="formData.telefono" type="number" maxlength="10"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -64,7 +64,7 @@
                   >Contrasena<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.contrasenia"/>
+                  <input v-model="formData.contrasenia" type="password"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -78,22 +78,35 @@
             </div>
           </div>
           <div class="card-footer">
-            <button class="btn btn-primary" type="submit">REGISTRAR</button>
+            <button class="btn btn-primary" >REGISTRAR</button>
           </div>
         </div>
       </form>
+      {{message}}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
+ 
     let app = new Vue({
         el: '#app',
         data: {
-            formData: {}
+            message : "hola mundo",
+            formData: {
+                contrasenia: "12345",
+                edad: 11,
+                estado: true,
+                genero: "M",
+                identificacion: "123456789",
+                nombre: "Pancracio",
+                telefono: "123456",
+                direccion:"norte",
+            }
         },
         methods: {
             async RegistrarCliente() {
+                console.log(this.formData)
                 axios.post('https://localhost:7187/api/clientes/',this.formData)
                 .then(function (response) {
                  console.log(response);
@@ -102,6 +115,9 @@
                  console.log(error);
                 });
             }
+        }, 
+        create(){
+            console.log("dddd")
         }
     })
 </script>
