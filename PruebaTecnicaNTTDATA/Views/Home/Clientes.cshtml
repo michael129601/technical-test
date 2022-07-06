@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] ="Clientes";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="app">
+    <form onsubmit="RegistrarCliente">
+        <div class="card">
+          <div class="card-header">
+            <label>REGISTRO DE CLIENTES</label>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Nombre<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input  v-model="formData.nombre"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Genero<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.genero"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Edad<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.edad"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Identificacion<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.identificacion" />
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Direccion<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input />
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Telefono<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.telefono"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Contrasena<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.contrasenia"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Estado<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model="formData.estado" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" type="submit">REGISTRAR</button>
+          </div>
+        </div>
+      </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            formData: {}
+        },
+        methods: {
+            async RegistrarCliente() {
+                axios.post('https://localhost:7187/api/clientes/',this.formData)
+                .then(function (response) {
+                 console.log(response);
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            }
+        }
+    })
+</script>

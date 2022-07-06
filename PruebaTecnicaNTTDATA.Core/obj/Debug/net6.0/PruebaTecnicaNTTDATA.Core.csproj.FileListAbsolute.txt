@@ -1,0 +1,15 @@
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\bin\Debug\net6.0\PruebaTecnicaNTTDATA.Core.deps.json
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\bin\Debug\net6.0\PruebaTecnicaNTTDATA.Core.dll
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\bin\Debug\net6.0\PruebaTecnicaNTTDATA.Core.pdb
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.csproj.AssemblyReference.cache
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.AssemblyInfoInputs.cache
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.AssemblyInfo.cs
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.csproj.CoreCompileInputs.cache
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.dll
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\refint\PruebaTecnicaNTTDATA.Core.dll
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.pdb
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\ref\PruebaTecnicaNTTDATA.Core.dll
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\bin\Debug\net6.0\PruebaTecnicaNTTDATA.Entity.dll
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\bin\Debug\net6.0\PruebaTecnicaNTTDATA.Entity.pdb
+C:\Users\MICHAEL\Desktop\PruebaTecnicaNTTDATA\PruebaTecnicaNTTDATA.Core\obj\Debug\net6.0\PruebaTecnicaNTTDATA.Core.csproj.CopyComplete
