@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PruebaTecnicaNTTDATA.Entity.Migrations
 {
-    public partial class Added_something : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", 1),
+                        .Annotation("MySql:ValueGenerationStrategy",1),
                     nombre = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     edad = table.Column<int>(type: "int", nullable: true),
@@ -42,7 +42,7 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                 columns: table => new
                 {
                     cliente_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", 1),
+                        .Annotation("MySql:ValueGenerationStrategy",1),
                     contrasenia = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -65,9 +65,8 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", 1),
+                        .Annotation("MySql:ValueGenerationStrategy",1),
                     numero_cuenta = table.Column<int>(type: "int", nullable: true),
-                    edad = table.Column<int>(type: "int", nullable: true),
                     tipo_cuenta = table.Column<string>(type: "varchar(1)", maxLength: 1, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     saldo_inicial = table.Column<double>(type: "double", nullable: true),
@@ -91,7 +90,7 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", 1),
+                        .Annotation("MySql:ValueGenerationStrategy",1),
                     fecha = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     tipo_movimiento = table.Column<string>(type: "varchar(1)", maxLength: 1, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

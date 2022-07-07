@@ -13,7 +13,7 @@ namespace PruebaTecnicaNTTDATA.Core.Facades
 
         public static readonly Dictionary<string, string> mapTipoCuenta = new Dictionary<string, string>() {
                 {"C","Corriente"},
-                {"A","doAhorrois"}
+                {"A","Ahorro"}
         };
         
         protected void cargaInicialMapTiposCuenta()
@@ -42,10 +42,12 @@ namespace PruebaTecnicaNTTDATA.Core.Facades
             return new
             {
                 numero_cuenta = cuenta.NumeroCuenta,
-                tipo = mapTipoCuenta[cuenta.TipoCuenta],
+                tipo_label = mapTipoCuenta[cuenta.TipoCuenta],
+                tipo = cuenta.TipoCuenta,
                 saldo_inicial = cuenta.SaldoInicial,
                 estado = cuenta.Estado,
                 cliente = cuenta.Clientes.Persona.Nombre,
+                clienteId = cuenta.ClienteId,
                 id = cuenta.Id
 
             };

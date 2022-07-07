@@ -71,7 +71,7 @@ namespace PruebaTecnicaNTTDATA.Controllers
                     return BadRequest();
                 }
                 var response = await cuentasFacade.Update(prmCuentas, id);
-                return StatusCode(StatusCodes.Status204NoContent, response);
+                return StatusCode(StatusCodes.Status204NoContent);
             }
             catch (CuentasException cex)
             {
@@ -85,7 +85,8 @@ namespace PruebaTecnicaNTTDATA.Controllers
         {
             try
             {
-                return Ok(await cuentasFacade.Delete(id));
+                var response = await cuentasFacade.Delete(id);
+                return StatusCode(StatusCodes.Status204NoContent);
             }
             catch (CuentasException cex)
             {

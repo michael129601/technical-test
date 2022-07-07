@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "8k2Udkqu7nEQrBsNQvewC7QbaxoAD9fjP0gw7RZTa7Q6pK/DY+HnBiA/4V3bQ/QFj/MMTTsluDR6f/0wj9cJuw==",
+  "dgSpecHash": "3Yp2VKbLJV8hWfBnJUhGbidb82+ZLtwIQ6kHux0lWQjofnW4zuqljN6Pgtp2EsilWwssSJk7E/vaDvVHYh+D3g==",
   "success": true,
   "projectFilePath": "C:\\Users\\MICHAEL\\Desktop\\PruebaTecnicaNTTDATA\\PruebaTecnicaNTTDATA\\PruebaTecnicaNTTDATA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MICHAEL\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
+    "C:\\Users\\MICHAEL\\.nuget\\packages\\font.awesome\\5.15.4\\font.awesome.5.15.4.nupkg.sha512",
     "C:\\Users\\MICHAEL\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
     "C:\\Users\\MICHAEL\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\MICHAEL\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",

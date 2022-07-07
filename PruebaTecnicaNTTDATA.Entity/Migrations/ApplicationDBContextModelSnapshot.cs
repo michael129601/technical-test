@@ -57,10 +57,6 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                         .HasColumnType("int")
                         .HasColumnName("cliente_id");
 
-                    b.Property<int?>("Edad")
-                        .HasColumnType("int")
-                        .HasColumnName("edad");
-
                     b.Property<bool?>("Estado")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("estado");

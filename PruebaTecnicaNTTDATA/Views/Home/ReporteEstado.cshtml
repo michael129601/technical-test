@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] ="ReporteEstadoCuenta";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="app">
+    <div class="card">
+          <div class="card-header">
+            <label>REPORTE ESTADO DE CUENTA</label>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Fecha Inicio<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input  type="date" v-model="formData.fechainicio"/>
+                </div>
+              </div>
+			  <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Fecha Fin<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input  type="date" v-model="formData.fechafin"/>
+                </div>
+              </div>
+			  <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Cliente<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+				<select v-model="formData.clienteId" >
+				  <option v-for="cliente in arrayClients" v-bind:value="cliente.id">
+					{{ cliente.nombres }}
+				  </option>
+				</select>
+                </div>
+              </div>
+			  <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <button class="btn btn-primary" v-on:click="GetInformacion">
+				<i class="bi bi-search"></i>
+				</button>
+              </div>
+			 </div>
+			</div>
+	</div>
+    <div class="mt-4">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-responsive table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Numero de Cuenta</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Saldo Inicial</th>
+                <th scope="col">Estado</th>
+				<th scope="col">Movimiento</th>
+				<th scope="col">Saldo Disponible</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="reporte in arrayReporte" :key="reporte.id">
+                <td>
+                  {{ reporte.fecha }}
+                </td>
+				<td>
+                  {{ reporte.cliente }}
+                </td>
+				<td>
+                  {{ reporte.numero_cuenta }}
+                </td>
+				<td>
+                  {{ reporte.tipo_cuenta }}
+                </td>
+				<td>
+                  {{ reporte.saldo_inicial }}
+                </td>
+				<td>
+                  {{ reporte.estado }}
+                </td>
+				<td>
+                  {{ reporte.movimiento }}
+                </td>
+				<td>
+                  {{ reporte.saldo_disponible }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+ 
+    window.app = new Vue({
+        el: '#app',
+        data: {
+           formData: {},
+			arrayReporte:[],
+            arrayClients : []
+        },
+        methods: {
+           async GetClientes() {
+                 try {
+                     return await axios.get('https://localhost:7187/api/clientes/');
+                 } catch (e) {
+                     return []
+                 }
+            },
+           async GetInformacion() {
+               console.log(this.formData)
+                 try {
+                     let uri = 'reportes?FechaFin='+this.formData.fechafin+'&FechaInicio='+this.formData.fechainicio+'&ClienteId='+this.formData.clienteId
+                     
+                     let response = await axios.get('https://localhost:7187/api/'+uri);
+                     this.arrayReporte = response.data
+
+
+                 } catch (e) {
+                     console.log(e)
+                     return []
+                 }
+            },
+        }, 
+       async mounted(){
+           let response = await this.GetClientes()
+           this.arrayClients = response.data
+    
+        }
+    })
+</script>

@@ -28,6 +28,20 @@ namespace PruebaTecnicaNTTDATA.Controllers
             return View();
         }
 
+        public IActionResult Cuentas()
+        {
+            return View();
+        }
+        public IActionResult Movimientos()
+        {
+            return View();
+        }
+        public IActionResult ReporteEstado()
+        {
+            return View();
+        }
+        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

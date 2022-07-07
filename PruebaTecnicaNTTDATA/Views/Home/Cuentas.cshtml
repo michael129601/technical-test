@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] ="Cuentas";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="app">
+    <form  v-on:submit.prevent="">
+        <div class="card">
+          <div class="card-header">
+              
+            <label v-if="isRegister">REGISTRO DE CUENTAS</label>
+             <label v-else>ACTUALIZACION DE CUENTA</label>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Numero de Cuenta<span class="text-danger" >*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input type="number" v-model.number="formData.numero_cuenta" :disabled="!isRegister"/>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Tipo de cuenta<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+				<select v-model="formData.tipo">
+				  <option v-for="option in options" v-bind:value="option.value">
+					{{ option.text }}
+				  </option>
+				</select>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Saldo Inicial<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input type="number" v-model.number="formData.saldo_inicial" />
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Estado<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input type="checkbox" v-model="formData.estado" />
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Cliente<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+				<select v-model="formData.clienteId" :disabled="!isRegister">
+				  <option v-for="cliente in arrayClients" v-bind:value="cliente.id">
+					{{ cliente.nombres }}
+				  </option>
+				</select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button v-if="isRegister" class="btn btn-primary" v-on:click="Registrar" >REGISTRAR</button>
+            <div v-else>
+                <button class="btn btn-primary" v-on:click="ActualizacionInfo(formData)" >ACTUALIZAR</button>
+                <button class="btn btn-danger" v-on:click="volverAFormaRegistro" >CANCELAR</button>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+        <div>
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-header">LISTA DE CUENTAS</div>
+        <div class="card-body">
+          <table class="table table-responsive table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Acciones</th>
+                <th scope="col">ID</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Numero Cuenta</th>
+                <th scope="col">Tipo Cuentas</th>
+                <th scope="col">Saldo Inicial</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="cuentas in arrayCuentas" :key="cuentas.id">
+                <td>
+                  <button v-on:click="Actualizar(cuentas)" class="btn btn-success">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button v-on:click="Eliminar(cuentas.id)" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+                <td>
+                  {{ cuentas.id }}
+                </td>
+				<td>
+                  {{ cuentas.cliente }}
+                </td>
+                <td>
+                  {{ cuentas.numero_cuenta }}
+                </td>
+                <td>
+                  {{ cuentas.tipo_label }}
+                </td>
+                <td>
+                  {{ cuentas.saldo_inicial }}
+                </td>
+                <td>
+                    <input type="checkbox" :checked="cuentas.estado" disabled />
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+ 
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            isRegister : true,
+            formData: {
+                numero_cuenta: 0,
+                tipo: 'A',
+                saldo_inicial: 0,
+                estado: true,
+                clienteId: 0
+            },
+            arrayClients : [],
+            arrayCuentas : [],
+            options: [
+                  { text: 'Ahorro', value: 'A' },
+                  { text: 'Credito', value: 'C' },
+		     ]
+        },
+        methods: {
+            volverAFormaRegistro() {
+                this.isRegister = true
+                this.formData= {
+                        numero_cuenta: 0,
+                        tipo: 0,
+                        saldo_inicial: 0,
+                        estado: true,
+                        clienteId: 0
+                    }
+            },
+            Actualizar(cuenta) {
+                this.formData = cuenta;
+                this.isRegister = false
+            },
+            async ActualizacionInfo(cuenta) {
+                axios.put('https://localhost:7187/api/cuentas/'+cuenta.id,cuenta)
+                .then(function (response) {
+                    if (response.status==204) alert("Cuenta Actualizada Satisfactoriamente")
+                    location.reload()
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            },
+            async Eliminar(id) {
+                 try {
+                     let response = await axios.delete('https://localhost:7187/api/cuentas/'+id);
+                     if (response.status == 204) {
+                         alert("Cuenta Eliminado Satisfactoriamente")
+                         location.reload()
+                     }
+                     else {
+                         alert("Cuenta No se pudo Eliminar")
+                         console.log(response)
+                     }
+
+                 } catch (e) {
+                     return []
+                 }
+            },   
+             async GetClientes() {
+                 try {
+                     let response = await axios.get('https://localhost:7187/api/clientes/');
+                     return response.status==200 ? response.data : []
+                 } catch (e) {
+                     return []
+                 }
+            },
+             async GetCuentas() {
+                 try {
+                      let response = await axios.get('https://localhost:7187/api/cuentas/');
+                     return response.status==200 ? response.data : []
+                 } catch (e) {
+                     return []
+                 }
+            },
+            async Registrar() {
+                console.log(this.formData)
+                axios.post('https://localhost:7187/api/cuentas/',this.formData)
+                .then(function (response) {
+                    console.log(response)
+
+                    if (response.status==201) alert("Cuenta Creada Satisfactoriamente")
+                    location.reload()
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            }
+        }, 
+        async mounted(){
+           this.arrayClients =  await this.GetClientes()
+           this.arrayCuentas = await this.GetCuentas()
+           console.log(this.arrayCuentas)
+        }
+    })
+</script>

@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["Title"] ="Movimientos";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="app">
+    <form  v-on:submit.prevent="">
+        <div class="card">
+          <div class="card-header">
+              
+            <label v-if="isRegister">REGISTRO DE MOVIMIENTOS</label>
+             <label v-else>ACTUALIZACION DE MOVIMIENTOS</label>
+          </div>
+         <div class="card-body">
+            <div class="row">
+			<div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Numero de Cuenta<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                 <select v-model.number="formData.numero_cuenta">
+				  <option v-for="cuenta in arrayCuentas" v-bind:value="cuenta.numero_cuenta">
+					{{ cuenta.numero_cuenta }}
+				  </option>
+				</select>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Tipo de Movimiento<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                 <select v-model="formData.tipo">
+				  <option v-for="option in options" v-bind:value="option.value">
+					{{ option.text }}
+				  </option>
+				</select>
+                </div>
+              </div>
+              <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <label class="col-form-label"
+                  >Valor<span class="text-danger">*</span></label
+                >
+                <div class="input-group col-xs-12">
+                  <input v-model.number="formData.valor" type="number" />
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <div class="card-footer">
+            <button v-if="isRegister" class="btn btn-primary" v-on:click="Registrar" >REGISTRAR</button>
+            <div v-else>
+                <button class="btn btn-primary" v-on:click="ActualizacionInfo(formData)" >ACTUALIZAR</button>
+                <button class="btn btn-danger" v-on:click="volverAFormaRegistro" >CANCELAR</button>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+        <div>
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-header">LISTA DE CUENTAS</div>
+        <div class="card-body">
+          <table class="table table-responsive table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Acciones</th>
+                <th scope="col">ID</th>
+                <th scope="col">Numero Cuenta</th>
+                <th scope="col">Tipo Movimiento</th>
+                <th scope="col">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="mov in arrayMovimiento" :key="mov.id">
+                <td>
+                  <button v-on:click="Actualizar(mov)" class="btn btn-success">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button v-on:click="Eliminar(mov.id)" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+               <td>
+                  {{ mov.id }}
+                </td>
+				<td>
+                  {{ mov.numero_cuenta }}
+                </td>
+                <td>
+                  {{ mov.tipo_label }}
+                </td>
+                <td>
+                  {{ mov.valor }}
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+ 
+    window.app = new Vue({
+        el: '#app',
+        data: {
+            isRegister : true,
+            formData: {
+               tipo_movimiento:"",
+			    valor : 0,
+				numero_cuenta:0
+            },
+            arrayClients : [],
+            arrayCuentas : [],
+             arrayMovimiento : [],
+           options: [
+                  { text: 'Debito', value: 'D' },
+                  { text: 'Credito', value: 'C' },
+		     ]
+        },
+        methods: {
+            volverAFormaRegistro() {
+                this.isRegister = true
+                this.formData= {
+                        tipo_movimiento:"",
+						valor : 0,
+						numero_cuenta:0
+                    }
+            },
+            Actualizar(movimiento) {
+                this.formData = movimiento;
+                this.isRegister = false
+            },
+            async ActualizacionInfo(movimiento) {
+                movimientoNew = {}
+                movimientoNew.tipo_movimiento = movimiento.tipo
+                movimientoNew.valor = movimiento.valor
+                console.log(movimientoNew)
+                axios.put('https://localhost:7187/api/movimientos/'+movimiento.id,movimientoNew)
+                .then(function (response) {
+                    if (response.status==204) alert("Movimiento Actualizada Satisfactoriamente")
+                    location.reload()
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            },
+            async Eliminar(id) {
+                 try {
+                     let response = await axios.delete('https://localhost:7187/api/movimientos/'+id);
+                     if (response.status == 204) {
+                         alert("Movimiento Eliminado Satisfactoriamente")
+                         location.reload()
+                     }
+                     else {
+                         alert("Movimiento No se pudo Eliminar")
+                         console.log(response)
+                     }
+
+                 } catch (e) {
+                     return []
+                 }
+            },   
+             async GetMovimiento() {
+                 try {
+                     let response = await axios.get('https://localhost:7187/api/movimientos/');
+                     return response.status==200 ? response.data : []
+                 } catch (e) {
+                     return []
+                 }
+            },
+             async GetCuentas() {
+                 try {
+                      let response = await axios.get('https://localhost:7187/api/cuentas/');
+                     return response.status==200 ? response.data : []
+                 } catch (e) {
+                     return []
+                 }
+            },
+            async Registrar() {
+                this.formData.tipo_movimiento = this.formData.tipo
+                axios.post('https://localhost:7187/api/movimientos/',this.formData)
+                .then(function (response) {
+                    console.log(response)
+
+                    if (response.status==201) alert("Movimiento Creada Satisfactoriamente")
+                    location.reload()
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            }
+        }, 
+        async mounted(){
+           this.arrayMovimiento =  await this.GetMovimiento()
+           this.arrayCuentas = await this.GetCuentas()
+           console.log(this.arrayCuentas)
+        }
+    })
+</script>

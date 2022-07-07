@@ -4,10 +4,12 @@
 <h1>@ViewData["Title"]</h1>
 
 <div id="app">
-    <form  v-on:submit.prevent="RegistrarCliente">
+    <form  v-on:submit.prevent="">
         <div class="card">
           <div class="card-header">
-            <label>REGISTRO DE CLIENTES</label>
+              
+            <label v-if="isRegister">REGISTRO DE CLIENTES</label>
+             <label v-else>ACTUALIZACION DE CLIENTE</label>
           </div>
           <div class="card-body">
             <div class="row">
@@ -16,15 +18,17 @@
                   >Nombre<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input  v-model="formData.nombre"/>
+                  <input  v-model="formData.nombres"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
-                <label class="col-form-label"
-                  >Genero<span class="text-danger">*</span></label
+                <label class="col-form-label">Genero<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.genero"/>
+                      <select v-model="formData.genero">
+                          <option value="M">Masculino</option>    
+                           <option value="F">Femenino</option>    
+                      </select>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -56,15 +60,15 @@
                   >Telefono<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.telefono" type="number" maxlength="10"/>
+                  <input v-model="formData.telefono" type="text" maxlength="10"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
                 <label class="col-form-label"
-                  >Contrasena<span class="text-danger">*</span></label
+                  >Contraseña<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.contrasenia" type="password"/>
+                  <input v-model="formData.clave" type="password"/>
                 </div>
               </div>
               <div class="form-group col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -72,52 +76,173 @@
                   >Estado<span class="text-danger">*</span></label
                 >
                 <div class="input-group col-xs-12">
-                  <input v-model="formData.estado" />
+                  <input type="checkbox" v-model="formData.estado" />
                 </div>
               </div>
             </div>
           </div>
           <div class="card-footer">
-            <button class="btn btn-primary" >REGISTRAR</button>
+            <button v-if="isRegister" class="btn btn-primary" v-on:click="RegistrarCliente" >REGISTRAR</button>
+            <div v-else>
+                <button class="btn btn-primary" v-on:click="ActualizacionInfoCliente(formData)" >ACTUALIZAR</button>
+                <button class="btn btn-danger" v-on:click="volverAFormaRegistro" >CANCELAR</button>
+            </div>
+            
           </div>
         </div>
       </form>
-      {{message}}
+        <div>
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-header">LISTA DE CLIENTES</div>
+        <div class="card-body">
+          <table class="table table-responsive table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Acctions</th>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Identificacion</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Contrasena</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="clients in arrayClients" :key="clients.id">
+                <td>
+                  <button v-on:click="ActualizarCliente(clients)" class="btn btn-success">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button v-on:click="EliminarCliente(clients.id)" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+                <td>
+                  {{ clients.id }}
+                </td>
+                <td>
+                  {{ clients.nombres }}
+                </td>
+                <td>
+                  {{ clients.genero }}
+                </td>
+                <td>
+                  {{ clients.edad }}
+                </td>
+                <td>
+                  {{ clients.identificacion }}
+                </td>
+                <td>
+                  {{ clients.direccion }}
+                </td>
+                <td>
+                  {{ clients.telefono }}
+                </td>
+                <td>
+                    <input type="checkbox" :checked="clients.estado" disabled />
+                </td>
+                <td>
+                  {{ clients.clave }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
  
-    let app = new Vue({
+    window.app = new Vue({
         el: '#app',
         data: {
-            message : "hola mundo",
+            isRegister : true,
             formData: {
-                contrasenia: "12345",
-                edad: 11,
+                clave: "",
+                edad: 0,
                 estado: true,
                 genero: "M",
-                identificacion: "123456789",
-                nombre: "Pancracio",
-                telefono: "123456",
-                direccion:"norte",
-            }
+                identificacion: "",
+                nombres: "",
+                telefono: "",
+                direccion:"",
+            },
+            arrayClients : []
         },
         methods: {
+            volverAFormaRegistro() {
+                this.isRegister = true
+                this.formData= {
+                        clave: "",
+                        edad: 0,
+                        estado: true,
+                        genero: "M",
+                        identificacion: "",
+                        nombres: "",
+                        telefono: "",
+                        direccion:"",
+                    }
+            },
+            ActualizarCliente(cliente) {
+                this.formData = cliente;
+                this.isRegister = false
+            },
+            async ActualizacionInfoCliente(cliente) {
+                axios.put('https://localhost:7187/api/clientes/'+cliente.id,cliente)
+                .then(function (response) {
+                    if (response.status==204) alert("Cliente Actualizado Satisfactoriamente")
+                    location.reload()
+                })
+                .catch(function (error) {
+                 console.log(error);
+                });
+            },
+            async EliminarCliente(id) {
+                 try {
+                     let response = await axios.delete('https://localhost:7187/api/clientes/'+id);
+                     if (response.status == 204) {
+                         alert("Cliente Eliminado Satisfactoriamente")
+                         location.reload()
+                     }
+                     else {
+                         alert("Cliente No se pudo Eliminar")
+                         console.log(response)
+                     }
+
+                 } catch (e) {
+                     return []
+                 }
+            },
+             async GetClientes() {
+                 try {
+                     return await axios.get('https://localhost:7187/api/clientes/');
+                 } catch (e) {
+                     return []
+                 }
+            },
             async RegistrarCliente() {
-                console.log(this.formData)
                 axios.post('https://localhost:7187/api/clientes/',this.formData)
                 .then(function (response) {
-                 console.log(response);
+                    if (response.status==201) alert("Cliente Creado Satisfactoriamente")
+                    location.reload()
                 })
                 .catch(function (error) {
                  console.log(error);
                 });
             }
         }, 
-        create(){
-            console.log("dddd")
+        async mounted(){
+           let response =  await this.GetClientes()
+           this.arrayClients = response.data
         }
     })
 </script>

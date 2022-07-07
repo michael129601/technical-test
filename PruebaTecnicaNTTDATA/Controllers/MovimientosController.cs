@@ -69,7 +69,8 @@ namespace PruebaTecnicaNTTDATA.Controllers
         {
             try
             {
-                return StatusCode(StatusCodes.Status204NoContent,await facade.Delete(id));
+                var response = await facade.Delete(id);
+                return StatusCode(StatusCodes.Status204NoContent);
             }
             catch (MovimientosException cex)
             {
@@ -88,7 +89,7 @@ namespace PruebaTecnicaNTTDATA.Controllers
                     return BadRequest();
                 }
                 var response = await facade.Update(id, prmMovimientos);
-                return StatusCode(StatusCodes.Status204NoContent, response);
+                return StatusCode(StatusCodes.Status204NoContent);
             }
             catch (MovimientosException cex)
             {

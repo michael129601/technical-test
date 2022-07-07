@@ -11,8 +11,8 @@ using PruebaTecnicaNTTDATA.Entity.Connector;
 namespace PruebaTecnicaNTTDATA.Entity.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20220705055752_Added_something")]
-    partial class Added_something
+    [Migration("20220707011831_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,10 +58,6 @@ namespace PruebaTecnicaNTTDATA.Entity.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int")
                         .HasColumnName("cliente_id");
-
-                    b.Property<int?>("Edad")
-                        .HasColumnType("int")
-                        .HasColumnName("edad");
 
                     b.Property<bool?>("Estado")
                         .HasColumnType("tinyint(1)")

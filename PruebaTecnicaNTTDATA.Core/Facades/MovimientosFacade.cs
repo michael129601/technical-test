@@ -153,9 +153,11 @@ namespace PruebaTecnicaNTTDATA.Core.Facades
         {
             return new
             {
+                id = movimiento.Id,
                 cliente = movimiento.Cuentas.Clientes.Persona.Nombre,
                 numero_cuenta = movimiento.Cuentas.NumeroCuenta,
-                tipo = mapTipoMovimiento[movimiento.TipoMovimiento],
+                tipo_label = mapTipoMovimiento[movimiento.TipoMovimiento],
+                tipo = movimiento.TipoMovimiento,
                 saldo = movimiento.Saldo,
                 fecha = movimiento.Fecha,
                 valor = movimiento.Valor
